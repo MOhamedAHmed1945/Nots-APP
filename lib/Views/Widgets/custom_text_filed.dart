@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class CustomTextFiled extends StatelessWidget {
@@ -6,13 +5,24 @@ class CustomTextFiled extends StatelessWidget {
     Key? key,
     required this.hint,
     required this.maxLines,
+    this.onSaved,
   }) : super(key: key);
 
   final String hint;
   final int maxLines;
+  final void Function(String?)? onSaved;
+
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
+      validator: (value) {
+        if (value?.isEmpty ?? true) {
+          return 'This Field Is Required';
+        } else {
+          return null;
+        }
+      },
+      onSaved: onSaved,
       maxLines: maxLines,
       decoration: InputDecoration(
         border: buildBorder(),
